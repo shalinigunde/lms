@@ -1,19 +1,19 @@
 pipeline {
-  agent {
-    node{
-      label 'slave'
+agent {
+  node{
+    label 'slave'
+  }
+}
+stages {
+  stage('creating docker network') {
+    steps {
+      sh 'docker network create lms'
     }
   }
-   stages {
-     stage('creating docker network') {
-       steps {
-         sh 'docker network create lms'
-       }
-     }
-     stage('creating postgresql-db') {
-       steps {
-         sh 'docker container run -dt --name lms-db --network lms -p 5432:5432 -e POSTGRES_PASSWORD=password postgres'
-       }
+  stage('creating postgresql-db') {
+    steps {
+      sh 'docker container run -dt --name lms-db --network lms -p 5432:5432 -e POSTGRES_PASSWORD=password postgres'
      }
    }
+ }
 }
