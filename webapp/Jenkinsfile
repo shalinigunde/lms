@@ -1,0 +1,17 @@
+pipeline {
+agent {
+  node{
+    label 'slave'
+  }
+}
+stages {
+   stage('build frontend') {
+    steps {
+      dir('webapp'){
+      sh 'docker build -t lms-fe .'
+      sh 'docker container run -dt --name lms-fe-con --network lms -p 80:80 lms-fe'
+      }
+     }
+   }
+ }
+}
