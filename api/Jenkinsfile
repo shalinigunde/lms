@@ -15,6 +15,14 @@ stages {
       sh 'docker container run -dt --name lms-db --network lms -p 5432:5432 -e POSTGRES_PASSWORD=password postgres'
      }
    }
+   stage('build backend') {
+    steps {
+      dir('api'){
+      sh 'docker build -t lms-be .'
+      sh 'docker container run -dt --name lms-be-con --network lms -p 8080:8080 lms-be'
+      }
      }
    }
+ }
+}
 
